@@ -1,5 +1,4 @@
 <template>
-<!-- <md-dialog :md-active.sync="showDialog"> -->
   <md-app id="create" md-mode="fixed">
     <md-app-drawer
       md-permanent="full"
@@ -46,7 +45,6 @@
       </section>
     </md-app-content>
   </md-app>
-  <!-- </md-dialog> -->
 </template>
 
 <script>

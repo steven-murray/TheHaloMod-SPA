@@ -131,15 +131,6 @@ export default {
     async handleDeleteClick(modelName) {
       await this.$store.deleteModel(modelName);
     },
-    async handleEditClick(modelName) {
-      this.loadingModel = true;
-      this.currentModelParams = await this.$store.getModel(modelName);
-      this.currentModelMetaData.model_name = modelName;
-      this.currentModelStoredName = modelName;
-      this.currentOperation = OPERATIONS.edit;
-      this.loadingModel = false;
-      this.showDialog = true;
-    },
     async handleCopyClick(modelName) {
       this.loadingModel = true;
       await this.$store.cloneModel(modelName, `${modelName} copy`);

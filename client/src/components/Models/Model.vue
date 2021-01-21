@@ -4,7 +4,7 @@
       <span>{{name}}</span>
     </div>
 
-    <md-button class="md-icon-button" @click="$emit('edit-click', name)">
+    <md-button class="md-icon-button" :href="`/edit/${name}`">
       <md-icon>edit</md-icon>
       <md-tooltip>Edit</md-tooltip>
     </md-button>
