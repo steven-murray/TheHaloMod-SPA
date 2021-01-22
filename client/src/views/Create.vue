@@ -1,5 +1,16 @@
 <template>
   <md-app id="create" md-mode="fixed">
+    <md-app-toolbar>
+      <span class="md-title">{{model_metadata.model_name}}</span>
+      <div class="md-toolbar-section-end">
+          <md-button class="md-primary" @click="handleSave">
+            Save
+          </md-button>
+          <md-button class="md-primary">
+            Close
+          </md-button>
+        </div>
+    </md-app-toolbar>
     <md-app-drawer
       md-permanent="full"
       class="md-primary"
@@ -80,22 +91,15 @@ export default {
     TransferForm,
     scrollactive,
   },
-  props: {
-    params: {
-      type: Object,
-      default: () => clonedeep(INITIAL_STATE),
-    },
-    model_metadata: {
-      type: Object,
-      default: () => ({
-        model_name: 'Model',
-        fig_type: 'dndm',
-      }),
-    },
-  },
   data: () => ({
     showDialog: true,
     highlight: 0,
+    loading: true,
+    params: clonedeep(INITIAL_STATE),
+    model_metadata: {
+      model_name: 'Model',
+      fig_type: 'dndm',
+    },
     forms: [
       {
         component: ModelMetadataForm,
@@ -177,6 +181,15 @@ export default {
       },
     ],
   }),
+  async mounted() {
+    if (this.$route.name === 'Edit') {
+      this.model_metadata.model_name = this.$route.params.id;
+      this.params = await this.$store.getModel(this.model_metadata.model_name);
+    }
+    console.log(this.params, INITIAL_STATE);
+    this.$forceUpdate();
+    this.loading = false;
+  },
   methods: {
     updateModelMetaData(updatedMetaData) {
       this.$emit('update-metadata', updatedMetaData);
@@ -186,20 +199,34 @@ export default {
       console.log(this.$refs.scrollactive, event, currentItem, lastActiveItem);
       this.$refs.scrollactive.setScrollactiveItems();
     },
+    async handleSave() {
+      this.loading = true;
+      console.log(this.params);
+      if (this.$route.name === 'Edit') {
+        await this.$store.updateModel(this.$route.params.id, this.params);
+        if (this.model_metadata.model_name !== this.$route.params.id) {
+          await this.$store.cloneModel(this.$route.params.id, this.model_metadata.model_name);
+          await this.$store.deleteModel(this.$route.params.id);
+        }
+      } else {
+        await this.$store.createModel(this.params, this.model_metadata.model_name);
+      }
+      this.loading = false;
+      this.$router.push('/');
+    },
   },
 };
 </script>
 
 <style scoped>
   #create {
-    height: 80vh;
+    height: 94vh;
   }
   .md-drawer {
     width: 230px;
     max-width: calc(100vw - 125px);
   }
   .form {
-    margin: 10px;
-    margin-bottom: 10vh;
+    padding: 10px;
   }
 </style>
