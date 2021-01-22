@@ -2,8 +2,8 @@
   <div class="md-layout md-gutter">
     <div class="md-layout-item md-size-50">
       <md-field>
-        <label>Tracer Concentration</label>
-        <md-select v-model="model.tracer_concentration_model">
+        <label>{{title}}</label>
+        <md-select v-model="model[modelName]">
           <md-option
             v-for="(value, key) in options"
             :key="key"
@@ -14,16 +14,16 @@
       </md-field>
     </div>
     <div class="md-layout-item md-size-25">
-      <div v-for="(value, key) in model.tracer_concentration_params" :key="key">
+      <div v-for="(value, key) in model[paramsName]" :key="key">
         <md-field v-if="key === 'sample'">
           <label>{{key}}</label>
-          <md-select v-model="model.tracer_concentration_params.sample">
+          <md-select v-model="model[paramsName].sample">
             <md-option value="relaxed">relaxed</md-option>
             <md-option value="full">full</md-option>
           </md-select>
         </md-field>
         <DoubleField
-          v-model="model.tracer_concentration_params[key]"
+          v-model="model[paramsName][key]"
           v-else
           :value="value"
           :param="key"
@@ -48,7 +48,7 @@ export default {
   components: {
     DoubleField,
   },
-  props: ['defaultModel'],
+  props: ['defaultModel', 'title', 'modelName', 'paramsName'],
   model: {
     event: 'onChange',
     prop: 'parent_model',
@@ -57,22 +57,20 @@ export default {
     return {
       options: CONSTANTS.CMRelation_options,
       model: {
-        tracer_concentration_model: this.defaultModel,
-        tracer_concentration_params: params[this.defaultModel],
+        [this.modelName]: this.defaultModel,
+        [this.paramsName]: params[this.defaultModel],
       },
     };
   },
   created() {
     this.$emit('onChange', this.model);
-    // this.model.tracer_concentration_model = this.defaultModel;
-    // this.model.tracer_concentration_params = params[this.defaultModel];
   },
   watch: {
     model: {
       deep: true,
       handler() {
-        this.model.tracer_concentration_params = params[
-          this.model.tracer_concentration_model
+        this.model[this.paramsName] = params[
+          this.model[this.modelName]
         ];
         this.$emit('onChange', this.model);
       },

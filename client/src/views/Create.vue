@@ -113,6 +113,8 @@ export default {
         component: Concentration,
         model: 'tracer_concentration',
         props: {
+          modelName: 'tracer_concentration_model',
+          paramsName: 'tracer_concentration_params',
           title: 'Tracer Concentration',
           id: 'tracer-concentration',
           defaultModel: 'Bullock01',
@@ -122,6 +124,8 @@ export default {
         component: Concentration,
         model: 'halo_concentration',
         props: {
+          modelName: 'halo_concentration_model',
+          paramsName: 'halo_concentration_params',
           title: 'Halo Concentration',
           id: 'halo-concentration',
           defaultModel: 'Duffy08',
