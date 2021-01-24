@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import Models from '@/components/Models';
+import Models from '@/components/Models.vue';
 import Graph from '../components/Graph.vue';
 
 export default {

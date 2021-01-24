@@ -6,7 +6,7 @@
           <md-button class="md-primary" @click="handleSave">
             Save
           </md-button>
-          <md-button class="md-primary">
+          <md-button href="/" class="md-primary">
             Close
           </md-button>
         </div>
@@ -97,7 +97,7 @@ export default {
     loading: true,
     params: clonedeep(INITIAL_STATE),
     model_metadata: {
-      model_name: 'Model',
+      model_name: 'New Model',
       fig_type: 'dndm',
     },
     forms: [
