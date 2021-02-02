@@ -57,6 +57,7 @@
 import InputField from '@/components/InputField.vue';
 import DoubleField from '@/components/DoubleField.vue';
 import BACKEND_CONSTANTS from '@/constants/backend_constants';
+import clonedeep from 'lodash.clonedeep';
 
 const transferChoices = {
   CAMB: 'CAMB',
@@ -82,7 +83,7 @@ export default {
       transferChoices,
       transferChoice: this.transferData.transfer_model,
       allTransferData: {
-        ...BACKEND_CONSTANTS.TransferComponent_params,
+        ...clonedeep(BACKEND_CONSTANTS.TransferComponent_params),
       },
     };
   },
@@ -102,7 +103,7 @@ export default {
           ...this.transferData,
         };
         newTransferObj[varName] = newValue;
-        this.$emit('updateTransfer', newTransferObj);
+        this.$emit('updateTransfer', clonedeep(newTransferObj));
       };
     },
   },
@@ -113,7 +114,7 @@ export default {
         ...this.allTransferData[newChoice],
         transfer_model: newChoice,
       };
-      this.$emit('updateTransfer', newTransferObj);
+      this.$emit('updateTransfer', clonedeep(newTransferObj));
     },
   },
 };

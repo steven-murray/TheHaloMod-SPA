@@ -31,6 +31,7 @@
 <script>
 import BACKEND_CONSTANTS from '@/constants/backend_constants';
 import DoubleField from '@/components/DoubleField.vue';
+import clonedeep from 'lodash.clonedeep';
 
 export default {
   name: 'CosmologyForm',
@@ -86,7 +87,7 @@ export default {
        * Represents the different selections of the cosmo model and saves the
        * users' inputs for each.
        */
-      allCosmoData: JSON.parse(JSON.stringify(BACKEND_CONSTANTS.cosmo_params)),
+      allCosmoData: clonedeep(BACKEND_CONSTANTS.cosmo_params),
       cosmologyChoices: Object.keys(BACKEND_CONSTANTS.cosmo_params),
       cosmologyChoice: this.cosmoData.cosmo_model,
     };
@@ -97,7 +98,7 @@ export default {
   created() {
     if (this.cosmoData.cosmo_params === null) {
       const newCosmoObj = {
-        ...BACKEND_CONSTANTS.cosmo_params.Planck13,
+        ...clonedeep(BACKEND_CONSTANTS.cosmo_params.Planck13),
         cosmo_model: this.cosmologyChoice,
       };
       this.$emit('updateCosmo', newCosmoObj);

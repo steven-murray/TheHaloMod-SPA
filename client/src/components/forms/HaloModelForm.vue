@@ -77,6 +77,7 @@
 import BACKEND_CONSTANTS from '@/constants/backend_constants';
 import DoubleField from '@/components/DoubleField.vue';
 import InputField from '@/components/InputField.vue';
+import clonedeep from 'lodash.clonedeep';
 
 const haloModelChoices = {
   linear: 'linear',
@@ -136,13 +137,13 @@ export default {
       choices: haloModelChoices,
       model: {
         hc_spectrum: 'linear',
-        ...BACKEND_CONSTANTS.halo_model_params,
+        ...clonedeep(BACKEND_CONSTANTS.halo_model_params),
       },
       haloModelDefaultModel,
     };
   },
   updated() {
-    this.$emit('onChange', this.model);
+    this.$emit('onChange', clonedeep(this.model));
   },
   computed: {
     log_r_model: {

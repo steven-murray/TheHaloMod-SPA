@@ -49,8 +49,6 @@ const profileChoices = {
   'Cored NFW': 'CoredNFW',
 };
 
-const profileParams = clonedeep(BACKEND_CONSTANTS.Profile_params);
-
 export default {
   name: 'profile',
   model: {
@@ -62,9 +60,9 @@ export default {
     profileChoices,
     model: {
       profile_model: 'NFW',
-      profile_params: profileParams.NFW,
+      profile_params: clonedeep(BACKEND_CONSTANTS.Profile_params).NFW,
     },
-    defaults: profileParams.NFW,
+    defaults: clonedeep(BACKEND_CONSTANTS.Profile_params).NFW,
     choices: profileChoices,
   }),
   updated() {
@@ -76,14 +74,14 @@ export default {
       payload.halo_profile_model = this.model.profile_model;
       payload.halo_profile_params = this.model.profile_params;
     }
-    this.$emit('onChange', this.payload);
+    this.$emit('onChange', clonedeep(this.payload));
   },
   watch: {
     'model.profile_model': function updateOptions(val) {
       this.model.profile_params = null;
       this.$nextTick(function saveNewOptions() {
-        this.model.profile_params = profileParams[val];
-        this.defaults = profileParams[val];
+        this.model.profile_params = clonedeep(BACKEND_CONSTANTS.Profile_params)[val];
+        this.defaults = clonedeep(BACKEND_CONSTANTS.Profile_params)[val];
       });
     },
   },

@@ -38,6 +38,7 @@
 <script>
 import BACKEND_CONSTANTS from '@/constants/backend_constants';
 import DoubleField from '@/components/DoubleField.vue';
+import clonedeep from 'lodash.clonedeep';
 
 const filterChoices = {
   TopHat: 'Top-hat',
@@ -59,7 +60,7 @@ export default {
   },
   data() {
     return {
-      allFilterData: BACKEND_CONSTANTS.Filter_params,
+      allFilterData: clonedeep(BACKEND_CONSTANTS.Filter_params),
       filterChoices,
       filterChoice: BACKEND_CONSTANTS.filter_model,
     };
@@ -78,7 +79,7 @@ export default {
         };
         newFilterObj.filter_params[varName] = newValue;
         this.allFilterData[filterType][varName] = newValue;
-        this.$emit('updateFilter', newFilterObj);
+        this.$emit('updateFilter', clonedeep(newFilterObj));
       };
     },
     /**
