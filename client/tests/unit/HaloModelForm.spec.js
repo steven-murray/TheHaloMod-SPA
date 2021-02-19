@@ -9,7 +9,7 @@ describe('Mounted HaloModelForm', () => {
   const wrapper = mount(HaloModelForm, {
     propsData: { init: INITIAL_STATE.halo_model },
     localVue,
-  });
+  }); 
 
   // const options = Object.keys(BACKEND_CONSTANTS.halo_model_params);
 
